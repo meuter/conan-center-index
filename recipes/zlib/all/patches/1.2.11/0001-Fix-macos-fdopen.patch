@@ -1,0 +1,58 @@
+From 366d59e7db74d064935fd2499dc226254aae3f09 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?C=C3=A9dric=20Meuter?= <cedric.meuter@hexagon.com>
+Date: Sat, 4 Oct 2025 09:36:22 +0200
+Subject: [PATCH] patch
+
+---
+ zutil.h | 27 +--------------------------
+ 1 file changed, 1 insertion(+), 26 deletions(-)
+
+diff --git a/zutil.h b/zutil.h
+index b079ea6..28c03b1 100644
+--- a/zutil.h
++++ b/zutil.h
+@@ -130,17 +130,8 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
+ #  endif
+ #endif
+ 
+-#if defined(MACOS) || defined(TARGET_OS_MAC)
++#if defined(MACOS)
+ #  define OS_CODE  7
+-#  ifndef Z_SOLO
+-#    if defined(__MWERKS__) && __dest_os != __be_os && __dest_os != __win32_os
+-#      include <unix.h> /* for fdopen */
+-#    else
+-#      ifndef fdopen
+-#        define fdopen(fd,mode) NULL /* No fdopen() */
+-#      endif
+-#    endif
+-#  endif
+ #endif
+ 
+ #ifdef __acorn
+@@ -163,22 +154,6 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
+ #  define OS_CODE 19
+ #endif
+ 
+-#if defined(_BEOS_) || defined(RISCOS)
+-#  define fdopen(fd,mode) NULL /* No fdopen() */
+-#endif
+-
+-#if (defined(_MSC_VER) && (_MSC_VER > 600)) && !defined __INTERIX
+-#  if defined(_WIN32_WCE)
+-#    define fdopen(fd,mode) NULL /* No fdopen() */
+-#    ifndef _PTRDIFF_T_DEFINED
+-       typedef int ptrdiff_t;
+-#      define _PTRDIFF_T_DEFINED
+-#    endif
+-#  else
+-#    define fdopen(fd,type)  _fdopen(fd,type)
+-#  endif
+-#endif
+-
+ #if defined(__BORLANDC__) && !defined(MSDOS)
+   #pragma warn -8004
+   #pragma warn -8008
+-- 
+2.49.0
+
